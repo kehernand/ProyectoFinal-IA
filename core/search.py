@@ -15,6 +15,9 @@ def _result(found, goal, parent, expanded, w):
         n = p
     edges.reverse()
     tot = {k: sum(e[3][k] for e in edges) for k in ("min", "cop", "co2", "km")}
+    # El costo (cop) se recalcula por abordaje: un solo pasaje por leg, no por estación.
+    _legs = legs(edges)
+    tot["cop"] = sum(L["cop"] for L in _legs)
     return {
         "found": True,
         "expanded": expanded,
@@ -80,7 +83,9 @@ def graph():
 
 
 def legs(edges):
-    """Agrupa tramos consecutivos con el mismo modo y ruta: [{mode, route, stops, min, cop, co2, km}]."""
+    """Agrupa tramos consecutivos con el mismo modo y ruta: [{mode, route, stops, min, cop, co2, km}].
+    La tarifa plana de abordaje (met['fare']) se cobra UNA sola vez por abordaje: al unir
+    estaciones consecutivas del mismo modo/ruta se descuenta la tarifa repetida (un solo pasaje)."""
     out = []
     for a, b, mode, met, rt in edges:
         if out and out[-1]["mode"] == mode and out[-1]["route"] == rt:
@@ -88,6 +93,7 @@ def legs(edges):
             L["stops"].append(b)
             for k in ("min", "cop", "co2", "km"):
                 L[k] += met[k]
+            L["cop"] -= met.get("fare", 0)  # no se vuelve a pagar el pasaje
         else:
             out.append(
                 {

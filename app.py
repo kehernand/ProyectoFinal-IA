@@ -151,11 +151,10 @@ with tab1:
                     + [f"● **{L['stops'][-1]}** (baja)"]
                 )
             )
-        if any(L["mode"] == "bus" for L in plan) and any(
-            r.get("ilustrativa") for r in BUS_ROUTES
-        ):
+        if any(L["mode"] == "bus" for L in plan):
             st.info(
-                "⚠️ Las rutas de bus son de EJEMPLO. Reemplazar `data/bus_routes.json` con datos reales (GTFS / MEData)."
+                "🚌 Las rutas de bus son corredores reales del Valle de Aburrá (ver `data/bus_routes.json`), "
+                "con paradas mapeadas a estaciones de la Línea A. Tarifa colectivo 2026: $3.800."
             )
     rows = [
         {

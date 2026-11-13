@@ -23,7 +23,10 @@ python scripts/download_osm.py     # descarga la red vial (varios minutos, requi
 Con `data/valle_drive.graphml` presente, el mapa sigue las calles; sin él, dibuja línea recta entre paradas.
 
 ## Datos de bus
-`data/bus_routes.json` contiene rutas de EJEMPLO. Reemplazar por datos reales (GTFS / MEData) y quitar `"ilustrativa": true`.
+`data/bus_routes.json` contiene corredores reales de bus del Valle de Aburrá (sur por La 50, Envigado–Poblado–centro, y norte por la Autopista Norte), con operador, tarifa 2026 y fuente. Las paradas se mapean a las estaciones de la Línea A que cada corredor sirve. Tarifa de abordaje del colectivo metropolitano 2026: $3.800 (general); ver fuentes en `corpus/metro_medellin.md`.
+
+### Tarifas reales 2026 (SITVA)
+El modelo usa tarifas planas reales por abordaje (no por km): Metro perfil Frecuente con Cívica **$3.820** y bus colectivo metropolitano **$3.800** (vigentes desde el 10-ene-2026, Área Metropolitana del Valle de Aburrá). La tarifa se cobra una sola vez por abordaje; ver `core/graph.py` (MODES) y `corpus/metro_medellin.md` para fuentes y perfiles (estudiantil, adulto mayor, eventual).
 
 ## Pendiente del equipo
 1. Reemplazar coordenadas/parámetros por datos reales y citarlos (OSM/osmnx, AMVA, Metro, SIATA).

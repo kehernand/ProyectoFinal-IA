@@ -72,12 +72,19 @@ def metro_status(hour, dtype="lun-sab"):
 _p = os.path.join(os.path.dirname(__file__), "..", "data", "bus_routes.json")
 BUS_ROUTES = json.load(open(_p, encoding="utf-8")) if os.path.exists(_p) else []
 
-# speed km/h (flujo libre), COP/km, gCO2/km, factor de distancia sobre línea recta
+# speed km/h (flujo libre), gCO2/km, factor de distancia sobre línea recta,
+# y "fare" = tarifa plana en COP que se cobra UNA vez por abordaje (no por km).
+# Tarifas vigentes 2026 del SITVA (Área Metropolitana del Valle de Aburrá), ajuste del 10-ene-2026:
+#   - Metro / masivo perfil Frecuente (Cívica): $3.820
+#   - Bus público colectivo metropolitano (tarifa general municipios conurbados): $3.800
+# Fuente: Telemedellín, "Tarifas de transporte público en Medellín ... 2026"
+#   https://telemedellin.tv/tarifas-transporte-publico-medellin-2026/ (consultado 13-nov-2026)
+# El carro no paga tarifa de abordaje; se modela con un costo por km (combustible + desgaste).
 MODES = {
-    "metro": {"speed": 35, "cop_km": 350, "co2_km": 30, "detour": 1.1},
-    "bus": {"speed": 22, "cop_km": 450, "co2_km": 80, "detour": 1.3},
-    "bici": {"speed": 15, "cop_km": 0, "co2_km": 0, "detour": 1.3},
-    "carro": {"speed": 40, "cop_km": 1200, "co2_km": 170, "detour": 1.3},
+    "metro": {"speed": 35, "fare": 3820, "cop_km": 0, "co2_km": 30, "detour": 1.1},
+    "bus": {"speed": 22, "fare": 3800, "cop_km": 0, "co2_km": 80, "detour": 1.3},
+    "bici": {"speed": 15, "fare": 0, "cop_km": 0, "co2_km": 0, "detour": 1.3},
+    "carro": {"speed": 40, "fare": 0, "cop_km": 1200, "co2_km": 170, "detour": 1.3},
 }
 
 
@@ -146,9 +153,18 @@ def congestion(mode, hour):
 
 
 def edge_metrics(mode, dist, hour):
+    """Métricas de una arista. 'cop' = tarifa plana de abordaje (fare) + costo por km.
+    En el grafo cada arista representa un abordaje potencial; legs() descuenta la tarifa
+    repetida al agrupar estaciones consecutivas del mismo modo/ruta (un solo pasaje)."""
     m = MODES[mode]
     t = dist / (m["speed"] * congestion(mode, hour)) * 60
-    return {"min": t, "cop": dist * m["cop_km"], "co2": dist * m["co2_km"], "km": dist}
+    return {
+        "min": t,
+        "cop": m["fare"] + dist * m["cop_km"],
+        "co2": dist * m["co2_km"],
+        "km": dist,
+        "fare": m["fare"],
+    }
 
 
 def scalar_cost(met, w):  # unidades: min, miles COP, 100 g CO2

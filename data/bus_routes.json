@@ -1,5 +1,29 @@
 [
- {"id":"B-101 (ejemplo)","ilustrativa":true,"paradas":["Niquía","Bello","Madera","Acevedo","Tricentenario","Universidad","Parque Berrío"]},
- {"id":"B-202 (ejemplo)","ilustrativa":true,"paradas":["Parque Berrío","Alpujarra","Exposiciones","Industriales","Poblado","Aguacatala","Envigado"]},
- {"id":"B-303 (ejemplo)","ilustrativa":true,"paradas":["Poblado","Aguacatala","Ayurá","Envigado","Itagüí","Sabaneta","La Estrella"]}
+  {
+    "id": "Caldas–La Estrella / La 50",
+    "nombre": "Corredor por la Carrera 50 (La 50): Caldas–La Estrella–Itagüí hacia el centro",
+    "operador": "Transporte público colectivo metropolitano (SITVA)",
+    "tarifa_cop": 3800,
+    "fuente": "Área Metropolitana del Valle de Aburrá, tarifas SITVA 2026 (10-ene-2026). https://telemedellin.tv/tarifas-transporte-publico-medellin-2026/",
+    "nota": "Corredor real del sur del Valle de Aburrá; paradas mapeadas a las estaciones Línea A que sirve.",
+    "paradas": ["La Estrella", "Sabaneta", "Itagüí", "Envigado", "Ayurá", "Aguacatala", "Poblado"]
+  },
+  {
+    "id": "Envigado–Poblado–Centro",
+    "nombre": "Corredor Envigado / Sabaneta (Cuenca 5) hacia El Poblado y el centro",
+    "operador": "Rutas integradas / colectivo metropolitano (SITVA)",
+    "tarifa_cop": 3800,
+    "fuente": "Área Metropolitana del Valle de Aburrá, tarifas SITVA 2026 (10-ene-2026). https://telemedellin.tv/tarifas-transporte-publico-medellin-2026/",
+    "nota": "Tarifa integrada Cuenca 5 (Envigado/Sabaneta): $4.765 con Cívica; colectivo $3.800. Paradas mapeadas a estaciones Línea A.",
+    "paradas": ["Envigado", "Ayurá", "Aguacatala", "Poblado", "Industriales", "Exposiciones", "Alpujarra", "San Antonio", "Parque Berrío"]
+  },
+  {
+    "id": "Bello–Centro / Autopista Norte",
+    "nombre": "Corredor Bello (Cuenca 1) por la Autopista Norte hacia el centro",
+    "operador": "Rutas integradas / colectivo metropolitano (SITVA)",
+    "tarifa_cop": 3900,
+    "fuente": "Área Metropolitana del Valle de Aburrá, tarifas SITVA 2026 (10-ene-2026). Bello–Medellín colectivo $3.900; integrada Cuenca 1 $4.715. https://telemedellin.tv/tarifas-transporte-publico-medellin-2026/",
+    "nota": "Corredor real del norte; paradas mapeadas a estaciones Línea A sobre la Autopista Norte.",
+    "paradas": ["Niquía", "Bello", "Madera", "Acevedo", "Tricentenario", "Caribe", "Universidad", "Hospital", "Prado", "Parque Berrío"]
+  }
 ]
